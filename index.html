@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!---
+    1.  Bind() method returns a bound function that can excute later. call() and apply() functions invoke the function immediately.
+    2. Frist parameter in all these methods sets "this" value, whichis the object onwhich the function is invoked upon.
+    3.  The first argument should always refrence object and rest of all the parameters are the others arguments.
+    4. Bind() and call methods take argument like (object, "Jammu", "Kishtwar") but the apply method is take rest parameters except refrence object as an list of array like (object, ["Jammu", "Kishtwar"])
+    5. Pollyfill for bind is custom method which should behave like bind() method.
+      Please checkout given examples below.
+
+    -->
+
+    <script>
+      let data = {
+        name: "nakul",
+        lastName: "rathore",
+        getFullName: function (city, town) {
+          console.log(
+            `My name is ${this.name} ${this.lastName} an i am from ${city} ${town}.`
+          );
+        },
+      };
+
+      let newObj = {
+        name: "naveen",
+        lastName: "pradhan",
+      };
+
+      let functionExpression = data.getFullName.bind(
+        data,
+        "Jammu & Kashmir",
+        "kishtwar"
+      );
+
+      let newObjExpression = data.getFullName.bind(newObj, "UP", "Lucknow");
+
+      functionExpression();
+      newObjExpression();
+
+      // apply();
+      let data1 = {
+        name: "nakul",
+        lastName: "rathore",
+        getFullName: function (city, town) {
+          console.log(
+            `My name is ${this.name} ${this.lastName} an i am from ${city} ${town}.`
+          );
+        },
+      };
+
+      let newObj1 = {
+        name: "naveen",
+        last: "pradhan",
+      };
+
+      let functionExpression1 = data1.getFullName.apply(data1, [
+        "Jammu & Kashmir",
+        "kishtwar",
+      ]);
+
+      // call()
+      let data2 = {
+        name: "nakul",
+        lastName: "rathore",
+        getFullName: function (city, town) {
+          console.log(
+            `My name is ${this.name} ${this.lastName} an i am from ${city} ${town}.`
+          );
+        },
+      };
+
+      let newObj2 = {
+        name: "naveen",
+        lastName: "pradhan",
+      };
+
+      let functionExpression2 = data2.getFullName.call(newObj, "up", "Lucknow");
+
+      //polyfill for bind
+
+      const obj = {
+        name: "nakul",
+        lastName: "rathore",
+      };
+
+      function greetings(state, city) {
+        console.log(
+          `My name is ${this.name} ${this.lastName} an i am from ${state} ${city}.`
+        );
+      }
+
+      Function.prototype.newBind = function (...args) {
+        let binded = this,
+          params = args.slice(1);
+        return function (...innerArg) {
+          binded.apply(args[0], [...params, ...innerArg]);
+        };
+      };
+      let myBind = greetings.newBind(obj, "jammu");
+      console.log(myBind("kishtwar"));
+    </script>
+  </body>
+</html>
