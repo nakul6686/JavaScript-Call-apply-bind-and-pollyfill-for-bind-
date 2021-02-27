@@ -1,5 +1,5 @@
 # JavaScript-Call-apply-bind-and-pollyfill-for-bind-
-JavaScript Call(), apply(), bind(), and pollyfill for bind() examples are given and also check readme file to theory part.
+JavaScript Call(), apply(), bind(), and pollyfill for bind() examples are given.
 
 
 1. Bind() method returns a bound function that can excute later. call() and apply() functions invoke the function immediately.
